@@ -20,14 +20,28 @@
       </vs-col>
     </vs-row>
 
+    <div
+    style="margin-bottom: 50px;"
+    ></div>
+    <vs-row
+      vs-w="12"
+      style="margin-bottom: 25px"
+    >
+       <vs-col vs-offset="0.5" vs-type="flex" vs-align="flex-start" vs-w="12">
+          ACTIVITIES
+       </vs-col>
+    </vs-row>
     <vs-row
       vs-w="11.5"
+      style="margin-bottom: 20px;"
     >
       <vs-col vs-offset="0.5" vs-type="flex" vs-align="flex-start" vs-w="12">
         <div
           class="chart"
         >
-          <app-chart/>
+          <app-chart
+          :chart="chart"
+          />
         </div>
       </vs-col>
     </vs-row>
@@ -54,7 +68,7 @@ export default {
       this.axiosPromise({
         url: '/dashboard/',
         method: 'GET',
-        queryParams:{'time_period':'24_hours'}
+        queryParams:{'time_period':'4_hours'}
         }).then(response => {
           this.tiles = response['tile'];
           this.chart = response['chart'];
