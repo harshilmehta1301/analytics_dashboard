@@ -15,7 +15,7 @@
     >
       <vs-col vs-offset="0.5" vs-type="flex" vs-align="flex-start" vs-w="12">
       <OverviewCards
-      :card-data="[{'title':'Unique Users', 'value': 25}, {'title':'Total Calls', 'value': 250}, {'title':'Failed Calls', 'value': 2}]"
+      :card-data="tiles"
       ></OverviewCards>
       </vs-col>
     </vs-row>
@@ -42,10 +42,27 @@ export default {
   components: { AppChart, OverviewCards },
   data () {
     return {
-
+      tiles:[],
+      chart:{}
     }
   },
-
+  beforeMount: function () {
+    this.getAnalytics();
+  },
+  methods:{
+    getAnalytics: function (){
+      this.axiosPromise({
+        url: '/dashboard/',
+        method: 'GET',
+        queryParams:{'time_period':'24_hours'}
+        }).then(response => {
+          this.tiles = response['tile'];
+          this.chart = response['chart'];
+        }).catch(error => {
+          console.log(error);
+        });
+      }
+    }
 };
 </script>
 

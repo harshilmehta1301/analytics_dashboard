@@ -29,8 +29,11 @@ class DashboardAPIView(APIView):
         failed_calls = logs.filter(status='failed').count()
         return Response(
             {
-                'unique_users': unique_users,
-                'total_calls': total_calls,
-                'failed_calls': failed_calls
+                'tile': [
+                    {'title': 'Total Calls', 'value': total_calls},
+                    {'title': 'Unique Users', 'value': unique_users},
+                    {'title': 'Failed Calls', 'value': failed_calls}
+                ],
+                'chart': {}
             }
         )
