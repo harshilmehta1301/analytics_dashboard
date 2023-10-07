@@ -29,8 +29,8 @@ urlpatterns = [
         'auth/',
         include('users.urls', namespace='auth')
     ),
-    # path(
-    #     'dashboard/',
-    #     include('dashboard.urls', namespace='dashboard')
-    # ),
+    path(
+        'dashboard/',
+        include('dashboard.urls', namespace='dashboard')
+    ),
 ]

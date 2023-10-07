@@ -1,7 +1,6 @@
 from django.urls import path
 
 from api.views import V1APIView
-from users.views import UserLoginAPIView, UserLogoutAPIView
 
 app_name = 'api'
 
