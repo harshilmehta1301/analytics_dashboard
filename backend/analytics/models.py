@@ -11,7 +11,7 @@ class TimeStampedModel(models.Model):
 
 
 class Log(TimeStampedModel):
-    user = models.ForeignKey(to=User, on_delete=models.PROTECT)
+    user = models.IntegerField()
     app = models.CharField(null=True, max_length=255)
     status = models.CharField(null=True, max_length=255)
     request = models.JSONField(null=True)

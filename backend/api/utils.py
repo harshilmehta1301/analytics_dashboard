@@ -1,11 +1,11 @@
 from analytics.models import Log
 
 
-def log_request(user, data, source):
+def log_request(data, source):
     status = data.get('status', 'success')
-    response = {'message': 'Success response.'} if status == 'success' else {'message': 'Error while processing data.'}
+    response = {'message': 'Hello World.'} if status == 'success' else {'message': 'Bye World.'}
     kwargs = {
-        'user': user,
+        'user': data['user_id'],
         'status': status,
         'request': data,
         'response': response,

@@ -2,5 +2,4 @@
 backend/venv/
 backend/.secretsenv
 
-
 ./frontend/node_modules/

@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 
 # Create your models here.
 
-USER_TOKEN_EXPIRY_DURATION = 5
+USER_TOKEN_EXPIRY_DURATION = 15
 
 
 class UserToken(Token):
