@@ -1,7 +1,8 @@
 <template>
-  <div
-  ref="parentElement"
-  >
+  <div>
+    <vs-row>
+      <period-filter></period-filter>
+    </vs-row>
     <vs-row
       vs-w="12"
       style="margin-bottom: 25px"
@@ -51,9 +52,10 @@
 <script>
 import OverviewCards from '@/components/OverviewCards';
 import AppChart from '@/components/AppChart';
+import PeriodFilter from '@/components/PeriodFilter';
 export default {
   name: "AnalyticsDashboard",
-  components: { AppChart, OverviewCards },
+  components: { PeriodFilter, AppChart, OverviewCards },
   data () {
     return {
       tiles:[],
