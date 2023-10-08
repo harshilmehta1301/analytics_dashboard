@@ -1,7 +1,9 @@
 <template>
   <div>
     <vs-row>
-      <period-filter></period-filter>
+      <period-filter
+        @update-time-filter="handleFilterChange"
+      ></period-filter>
     </vs-row>
     <vs-row
       vs-w="12"
@@ -66,11 +68,18 @@ export default {
     this.getAnalytics();
   },
   methods:{
-    getAnalytics: function (){
+    handleFilterChange: function (payload){
+      this.getAnalytics(payload);
+    },
+    getAnalytics: function (payload){
+      if (!payload){
+        payload = {};
+        payload['time_period'] = '24_hours';
+      }
       this.axiosPromise({
         url: '/dashboard/',
         method: 'GET',
-        queryParams:{'time_period':'4_hours'}
+        queryParams:payload
         }).then(response => {
           this.tiles = response['tile'];
           this.chart = response['chart'];

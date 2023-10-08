@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-container z-level-5">
+  <div class="modal-container">
     <transition
       mode="out-in"
       enter-active-class="animated zoomIn animate--0-25"
@@ -50,6 +50,7 @@
     align-items: center;
     justify-content: center;
     transition: opacity 5s ease;
+    z-index: 10000;
   }
   .modal-content {
     background-color: white;

@@ -5,29 +5,30 @@
   <div class="time-filter">
     <form>
       <div class="form-group">
-        <span class="close" @click="closeModal">&times;</span>
-        <label style="margin-bottom: 30px;">Select Time Range:</label>
+        <label>Select Time Range:</label>
         <select
           class="custom-select"
-          v-model="selectedTimeRange"
-          @change="handleTimeRangeChange"
+          v-model="timeRange"
           style="margin-top: 20px; "
-
         >
           <option value="24_hours">Last 24 hours</option>
           <option value="7_days">Last 7 days</option>
-          <option value="custom_range">Custom time range</option>
+          <option value="custom">Custom time range</option>
         </select>
       </div>
-      <div class="form-group" v-if="selectedTimeRange === 'custom_range'">
+      <div class="form-group" style="margin-top: 30px;" v-if="timeRange === 'custom'">
         <label for="start-date">Start Date:</label>
+        <br>
         <input
           type="datetime-local"
           class="form-control"
           v-model="customStartDate"
           id="start-date"
+          style="margin-bottom: 30px;"
         >
+        <br>
         <label for="end-date">End Date:</label>
+        <br>
         <input
           type="datetime-local"
           class="form-control"
@@ -35,7 +36,33 @@
           id="end-date"
         >
       </div>
+      <div class="form-group">
+        <vs-row
+          vs-type="flex"
+          vs-w="12"
+          vs-justify="flex-end"
+          style="margin-top: 30px;"
+        >
+          <vs-button
+           style="margin-right: 10px; width: 70px;"
+           color="#26619c"
+           @click="handleTimeRangeChange"
+          >
+            Apply
+          </vs-button>
+          <vs-button
+            style="width: 70px;"
+            type="border"
+            color="grey"
+            @click="closeModal"
+          >
+            Cancel
+          </vs-button>
+        </vs-row>
+
+      </div>
     </form>
+
   </div>
   </app-modal>
   <vs-row
@@ -58,7 +85,7 @@
                   Last 7 Days
                </button>
               </vs-chip>
-              <vs-chip v-else-if="selectedTimeRange === 'custom_range'">
+              <vs-chip v-else-if="selectedTimeRange === 'custom'">
                 <button
                   class="chip-button"
                   @click="openModal">
@@ -77,7 +104,8 @@ export default {
   components: { AppModal },
   data() {
     return {
-      selectedTimeRange: '24_hours', // Default selection
+      selectedTimeRange: '24_hours',
+      timeRange: '24_hours',
       customStartDate: '',
       customEndDate: '',
       showFilter:false
@@ -85,8 +113,17 @@ export default {
   },
   methods: {
     handleTimeRangeChange() {
-      // Handle changes in the selected time range
-      // You can emit an event or update your data based on the selectedTimeRange value
+      if (this.selectedTimeRange !== this.timeRange) {
+        const payload ={
+          'time_period': this.timeRange
+        }
+        if (this.timeRange === 'custom'){
+          payload['custom_range'] = [this.customStartDate, this.customEndDate];
+        }
+        this.$emit('update-time-filter', payload);
+        this.selectedTimeRange = this.timeRange;
+        this.closeModal();
+      }
     },
     openModal(){
       this.showFilter = true;
@@ -107,6 +144,7 @@ export default {
   background-color: #f5f5f5;
   border: 1px solid #ddd;
   border-radius: 5px;
+  z-index: 9999;
 }
 
 .time-filter-title {
@@ -120,19 +158,23 @@ export default {
 }
 
 .custom-select {
-  width: 100%;
+  width: 70%;
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 20px;
+  height: 40px;
 }
 
 .form-control {
-  width: 100%;
+  width: 70%;
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 20px;
+  height: 40px;
+  margin-top: 20px;
+  background: #EFEFEF;
 }
 
 .selected-time-range {
@@ -153,7 +195,6 @@ export default {
 }
 
 .close {
-  position: absolute;
   top: 10px;
   right: 10px;
   font-size: 24px;

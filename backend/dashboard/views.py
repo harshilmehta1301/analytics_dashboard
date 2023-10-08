@@ -17,7 +17,6 @@ class DashboardAPIView(APIView):
         if time_period == 'custom':
             date_range = request.query_params['custom_range']
             period = 'days'
-            value = None
         else:
             filter_data = time_period.split('_')
             value = int(filter_data[0])

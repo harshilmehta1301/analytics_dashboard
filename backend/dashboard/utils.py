@@ -76,7 +76,9 @@ def get_chart_object(df):
         'legend': {
             'data': [],
             'top': 'bottom'
-        }
+        },
+        # 'color': ["#4E79A7", "#F28E2B", "#E15759", "#86BCB6", "#59A14F"]
+        'color': ["#4E79A7", "#59A14F", "#E15759"]
     }
     periods = df['Time'].tolist()
     base_object['xAxis']['data'] = periods
