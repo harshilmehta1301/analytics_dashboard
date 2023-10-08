@@ -55,7 +55,12 @@
       style="margin-bottom: 25px"
     >
       <vs-col vs-offset="0.5" vs-type="flex" vs-align="flex-start" vs-w="12">
-        <app-table />
+        <vs-card>
+        <app-table
+          v-if="Object.keys(table).length > 0"
+          :table="table"
+        />
+        </vs-card>
       </vs-col>
     </vs-row>
   </div>
@@ -73,7 +78,8 @@
     data () {
       return {
         tiles: [],
-        chart: {}
+        chart: {},
+        table:{}
       };
     },
     beforeMount: function () {
@@ -95,6 +101,7 @@
         }).then(response => {
           this.tiles = response['tile'];
           this.chart = response['chart'];
+          this.table = response['table'];
         }).catch(error => {
           console.log(error);
         });

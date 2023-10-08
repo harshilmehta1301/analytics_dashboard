@@ -36,18 +36,24 @@
       updateGraphSize: function () {
         this.$nextTick(() => {
         console.log(window.innerWidth)
-        const width = window.innerWidth;
+        let width = window.innerWidth;
         let height;
+        if (width > 1000){
+          width = width - 40;
+        }
         if (width > 800) {
           height = width * 0.3;
+          width = width - 110;
         }
         else if (width > 500) {
           height = width * 0.4;
+          width = width - 95;
         } else {
           height = width * 0.6;
+          width = width - 95;
         }
         this.graphSize = {
-          'width': `${ width - 95 }px`,
+          'width': `${ width }px`,
           'height': `${ height }px`,
         };
       });

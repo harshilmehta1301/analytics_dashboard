@@ -1,43 +1,29 @@
 # Create your views here.
-from datetime import datetime, timedelta
 
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from analytics.models import Log
-from dashboard.utils import get_chart
+from dashboard.utils import get_date_range
+from dashboard.visualisations.chart import Chart
+from dashboard.visualisations.table import Table
+from dashboard.visualisations.tile import Tile
 
 
 class DashboardAPIView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        time_period = request.query_params['time_period']
-        if time_period == 'custom':
-            date_range = [request.query_params['start_range'], request.query_params['end_range']]
-            period = 'days'
-        else:
-            filter_data = time_period.split('_')
-            value = int(filter_data[0])
-            period = filter_data[1]
-            print(period)
-            print(value)
-            end_range = datetime.now()
-            start_range = end_range - timedelta(**{period: value})
-            date_range = [start_range, end_range]
+        date_range, period = get_date_range(request_data=request.query_params)
         logs = Log.objects.filter(created__range=date_range)
-        total_calls = logs.count()
-        unique_users = logs.values_list('user').distinct().count()
-        failed_calls = logs.filter(status='failed').count()
-        chart = get_chart(period, date_range)
+        tile = Tile(query_set=logs).generate()
+        chart = Chart(period=period, filter_range=date_range).generate()
+        table = Table(query_set=logs).generate()
         return Response(
             {
-                'tile': [
-                    {'title': 'Total Calls', 'value': total_calls},
-                    {'title': 'Unique Users', 'value': unique_users},
-                    {'title': 'Failed Calls', 'value': failed_calls}
-                ],
-                'chart': chart
+                'tile': tile,
+                'chart': chart,
+                'table': table
             }
         )

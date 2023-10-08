@@ -1,4 +1,4 @@
-from copy import deepcopy
+from datetime import datetime, timedelta
 
 import pandas as pd
 import psycopg2
@@ -54,53 +54,16 @@ def get_sql_query(period, filter_range):
     return query
 
 
-def get_chart_df(period, filter_range):
-    query = get_sql_query(period, filter_range)
-    df = get_data_from_db(query)
-    return df
-
-
-def get_chart_object(df):
-    base_object = {
-        'yAxis': {
-            'type': 'value'
-        },
-        'xAxis': {
-            'type': 'category',
-            'data': []
-        },
-        'tooltip': {
-            'trigger': 'axis'
-        },
-        'series': [],
-        'legend': {
-            'data': [],
-            'top': 'bottom'
-        },
-        # 'color': ["#4E79A7", "#F28E2B", "#E15759", "#86BCB6", "#59A14F"]
-        'color': ["#4E79A7", "#59A14F", "#E15759"]
-    }
-    periods = df['Time'].tolist()
-    base_object['xAxis']['data'] = periods
-    categories = ['Calls', 'Users', 'Failure']
-    base_object['legend']['data'] = categories
-    series = []
-    for category in categories:
-        print(category)
-        print(deepcopy(df[category].tolist()))
-        series.append(
-            {
-                'type': 'line',
-                'name': category,
-                'stack': 'Total',
-                'data': df[category].tolist()
-            }
-        )
-    base_object['series'] = series
-    return base_object
-
-
-def get_chart(period, filter_range):
-    df = get_chart_df(period, filter_range)
-    chart = get_chart_object(df)
-    return chart
+def get_date_range(request_data):
+    time_period = request_data['time_period']
+    if time_period == 'custom':
+        date_range = [request_data['start_range'], request_data['end_range']]
+        period = 'days'
+    else:
+        filter_data = time_period.split('_')
+        value = int(filter_data[0])
+        period = filter_data[1]
+        end_range = datetime.now()
+        start_range = end_range - timedelta(**{period: value})
+        date_range = [start_range, end_range]
+    return date_range, period
