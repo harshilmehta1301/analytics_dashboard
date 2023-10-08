@@ -28,7 +28,7 @@ def get_data_from_db(query):
 
 def get_sql_query(period, filter_range):
     period_mapper = {
-        'hours': 'HH24:MI',
+        'hours': 'DD-MM-YYYY HH24:MI',
         'days': 'DD-MM-YYYY'
     }
     select_query = f'''

@@ -1,18 +1,20 @@
 <template>
-      <vs-card>
-        <template v-slot:header>
-          <h3>
-            {{ header }}
-          </h3>
-        </template>
-        <template v-slot>
+  <vs-card class="custom-card">
+    <template v-slot:header>
+      <h3>
+        {{ header }}
+      </h3>
+    </template>
+    <div
+      class="center-content"
+    >
             <span
-            style="font-size: 20px; color:blue;"
+              style="font-size: 20px; color:blue;"
             >
               {{ content }}
             </span>
-        </template>
-      </vs-card>
+    </div>
+  </vs-card>
 </template>
 
 <script>
@@ -32,5 +34,16 @@
 </script>
 
 <style scoped>
+  .custom-card {
+    width: 170px; /* Set your desired width */
+    height: 100px; /* Set your desired height */
+  }
 
+  .center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 10px;
+  }
 </style>

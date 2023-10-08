@@ -28,10 +28,11 @@ class Chart:
             'series': [],
             'legend': {
                 'data': [],
-                'top': 'bottom'
+                'top': 'bottom',
+                'icon': 'roundRect'
             },
             # 'color': ["#4E79A7", "#F28E2B", "#E15759", "#86BCB6", "#59A14F"]
-            'color': ["#4E79A7", "#59A14F", "#E15759"]
+            'color': ["#7A2573", "#3C7733", "#CC0000"]
         }
         periods = df['Time'].tolist()
         base_object['xAxis']['data'] = periods
@@ -39,8 +40,6 @@ class Chart:
         base_object['legend']['data'] = categories
         series = []
         for category in categories:
-            print(category)
-            print(deepcopy(df[category].tolist()))
             series.append(
                 {
                     'type': 'line',

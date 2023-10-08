@@ -7,10 +7,10 @@
     style="width: 100%; overflow-x: auto;"
   >
     <template #header>
-        <h3>
-          Logs
-        </h3>
-      </template>
+      <h3>
+        Logs
+      </h3>
+    </template>
     <template #thead>
 
       <vs-th
@@ -37,24 +37,27 @@
     props: {
       table: Object
     },
-    data() {
+    data () {
       return {
         descriptionItems: [5, 15],
-        data:[],
-        keys:[],
-        columns:[]
-      }
+        data: [],
+        keys: [],
+        columns: []
+      };
     },
-    watch:{
-      table:{
-        immediate:true,
-        deep:true,
-         handler: function () {
+    watch: {
+      table: {
+        immediate: true,
+        deep: true,
+        handler: function () {
           this.data = this.table['data'];
           this.keys = this.table['keys'];
           this.columns = this.table['columns'];
-         }
+        }
       }
     }
   };
 </script>
+<style>
+
+</style>
