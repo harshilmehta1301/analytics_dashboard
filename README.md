@@ -40,3 +40,12 @@ cp .secretsenv.sample .secretsenv
  python manage.py runserver
 ```
 
+### Setup Frontend
+
+```bash
+  cd frontend
+  sudo npm install -g npm
+  npm ci
+  npm run serve
+```
+* The server would be running on `localhost:8080`
