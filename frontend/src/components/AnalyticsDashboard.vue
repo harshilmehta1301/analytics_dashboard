@@ -50,6 +50,14 @@
         </div>
       </vs-col>
     </vs-row>
+    <vs-row
+      vs-w="11.5"
+      style="margin-bottom: 25px"
+    >
+      <vs-col vs-offset="0.5" vs-type="flex" vs-align="flex-start" vs-w="12">
+        <app-table />
+      </vs-col>
+    </vs-row>
   </div>
 </template>
 
@@ -57,10 +65,11 @@
   import OverviewCards from '@/components/OverviewCards';
   import AppChart from '@/components/AppChart';
   import PeriodFilter from '@/components/PeriodFilter';
+  import AppTable from '@/components/AppTable';
 
   export default {
     name: 'AnalyticsDashboard',
-    components: { PeriodFilter, AppChart, OverviewCards },
+    components: { AppTable, PeriodFilter, AppChart, OverviewCards },
     data () {
       return {
         tiles: [],

@@ -6,6 +6,9 @@ import 'echarts';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import globalMixins from './mixins/globalMixins';
+import 'material-icons/iconfont/material-icons.css';
+
+
 
 const app = createApp(App)
 app.use(Vuesax)
