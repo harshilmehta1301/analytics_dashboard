@@ -4,6 +4,8 @@ import pandas as pd
 import psycopg2
 from django.conf import settings
 
+from dashboard.exceptions import InvalidInputException
+
 
 def get_data_from_db(query):
     print(query)
@@ -55,15 +57,18 @@ def get_sql_query(period, filter_range):
 
 
 def get_date_range(request_data):
-    time_period = request_data['time_period']
-    if time_period == 'custom':
-        date_range = [request_data['start_range'], request_data['end_range']]
-        period = 'days'
-    else:
-        filter_data = time_period.split('_')
-        value = int(filter_data[0])
-        period = filter_data[1]
-        end_range = datetime.now()
-        start_range = end_range - timedelta(**{period: value})
-        date_range = [start_range, end_range]
-    return date_range, period
+    try:
+        time_period = request_data['time_period']
+        if time_period == 'custom':
+            date_range = [request_data['start_range'], request_data['end_range']]
+            period = 'days'
+        else:
+            filter_data = time_period.split('_')
+            value = int(filter_data[0])
+            period = filter_data[1]
+            end_range = datetime.now()
+            start_range = end_range - timedelta(**{period: value})
+            date_range = [start_range, end_range]
+        return date_range, period
+    except KeyError as e:
+        raise InvalidInputException(f'Please provide valid input.{str(e)}')

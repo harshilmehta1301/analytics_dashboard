@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 from dashboard.utils import get_data_from_db, get_sql_query
 
 
@@ -13,7 +11,8 @@ class Chart:
         df = get_data_from_db(query)
         return df
 
-    def get_chart_object(self, df):
+    @staticmethod
+    def get_chart_object(df):
         base_object = {
             'yAxis': {
                 'type': 'value'
