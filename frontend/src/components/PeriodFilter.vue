@@ -118,7 +118,8 @@ export default {
           'time_period': this.timeRange
         }
         if (this.timeRange === 'custom'){
-          payload['custom_range'] = [this.customStartDate, this.customEndDate];
+          payload['start_range'] = this.customStartDate;
+          payload['end_range'] = this.customEndDate;
         }
         this.$emit('update-time-filter', payload);
         this.selectedTimeRange = this.timeRange;
